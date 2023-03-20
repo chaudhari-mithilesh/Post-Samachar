@@ -37,7 +37,11 @@ function fetch_post() {
         );
     }
 
-    print("<pre>".print_r( $post_data, true ). "</pre>");
+    if( empty($post_data) ) {
+        echo "<center><h1>Oops! there are no posts published today.</h1></center>";
+    }else {
+        print("<pre>".print_r( $post_data, true ). "</pre>");
+    }
 
 
 
