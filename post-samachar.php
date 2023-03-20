@@ -36,13 +36,43 @@ require POST_SAMACHAR_DIR_PATH. 'include/fetch-post.php';
 // Sending Mail to admin
 require POST_SAMACHAR_DIR_PATH. 'include/mail.php';
 
-// add_action('wp_mail_failed', 'log_mailer_errors', 10, 1);
-// function log_mailer_errors( $wp_error ){
-//   $fn = ABSPATH . '/mail.log'; // say you've got a mail.log file in your server root
-//   $fp = fopen($fn, 'a');
-//   fputs($fp, "Mailer Error: " . $wp_error->get_error_message() ."\n");
-//   fclose($fp);
-//   wp_die("Mailer Error: " . $wp_error->get_error_message() ."\n");
-// }
+
+// Cron schedules
+
+function my_cron_schedules($schedules){
+    if(!isset($schedules["1min"])){
+        $schedules["1min"] = array(
+            'interval' => 1*60,
+            'display' => __('Once every minutes'));
+    }
+    if(!isset($schedules["24hr"])){
+        $schedules["30min"] = array(
+            'interval' => 60*60*24,
+            'display' => __('Once every day'));
+    }
+    return $schedules;
+}
+add_filter('cron_schedules','my_cron_schedules');
+
+// // Schedule the email event to run daily at 6:30 pm IST
+
+function schedule_admin_email() {
+    echo "Inside Schedule Function";
+    if ( ! wp_next_scheduled( 'send_admin_email' ) ) {
+        // Convert the time to the UTC timestamp
+        $timestamp = strtotime( '6:30pm GMT+5:30' );
+        wp_schedule_event( time(), '1min', 'send_admin_email' );
+    }
+}
+register_activation_hook( __FILE__, 'schedule_admin_email' );
+
+
+// remove schedule when deactivating plugin
+
+function remove_schedule() {
+    wp_clear_scheduled_hook( 'send_admin_email' );
+}
+
+register_deactivation_hook( __FILE__, 'remove_schedule' );
 
 ?>
