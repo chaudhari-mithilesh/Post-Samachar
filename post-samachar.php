@@ -61,7 +61,7 @@ function schedule_admin_email() {
     if ( ! wp_next_scheduled( 'send_admin_email' ) ) {
         // Convert the time to the UTC timestamp
         $timestamp = strtotime( '6:30pm GMT+5:30' );
-        wp_schedule_event( time(), '1min', 'send_admin_email' );
+        wp_schedule_event( $timestamp, 'daily', 'send_admin_email' );
     }
 }
 register_activation_hook( __FILE__, 'schedule_admin_email' );
