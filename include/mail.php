@@ -3,9 +3,20 @@
 // Define the function to send the email to the admin
 add_action( 'send_admin_email', 'send_email_to_admin' );
 function send_email_to_admin() {
+    $data = fetch_post();
     $to = 'dev-email@wpengine.local';
     $subject = 'Daily Update';
-    $message = 'This is your daily update from WordPress.';
+    $message = '';
+
+    foreach( $data as $post_data ) {
+      $message.= 'Post Title: '. $post_data['title']. "\n";
+      $message.= 'Post URL: '. $post_data['url']. "\n";
+      $message.= 'Meta Title: '. $post_data['meta_title']. "\n";
+      $message.= 'Meta Description: '. $post_data['meta_description']. "\n";
+      $message.= 'Meta Keywords: '. $post_data['meta_keywords']. "\n";
+      $message.= "\n\n";
+    }
+
     $headers = array( 
         'From: misuchaudhari25@gmail.com',
         'Content-Type: text/html; charset=UTF-8' 

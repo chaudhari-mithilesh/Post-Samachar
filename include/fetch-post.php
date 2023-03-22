@@ -43,7 +43,7 @@ function fetch_post() {
         print("<pre>".print_r( $post_data, true ). "</pre>");
     }
 
-
+    return $post_data;
 
 }
 
