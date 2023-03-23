@@ -26,6 +26,7 @@ function fetch_post() {
         $meta_title = get_post_meta( $post->ID, '_yoast_wpseo_title', true );
         $meta_description = get_post_meta( $post->ID, '_yoast_wpseo_metadesc', true );
         $meta_keywords = get_post_meta( $post->ID, '_yoast_wpseo_focuskw', true );
+        $score = get_page_speed_score( $url );
 
 
         $post_data[] = array(
@@ -34,6 +35,7 @@ function fetch_post() {
             'meta_title' => $meta_title,
             'meta_description' => $meta_description,
             'meta_keywords' => $meta_keywords,
+            'page_speed' => $score,
         );
     }
 

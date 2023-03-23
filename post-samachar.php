@@ -40,9 +40,9 @@ require POST_SAMACHAR_DIR_PATH. 'include/mail.php';
 // Cron schedules
 
 function my_cron_schedules($schedules){
-    if(!isset($schedules["1min"])){
-        $schedules["1min"] = array(
-            'interval' => 1*60,
+    if(!isset($schedules["2min"])){
+        $schedules["2min"] = array(
+            'interval' => 2*60,
             'display' => __('Once every minutes'));
     }
     if(!isset($schedules["24hr"])){

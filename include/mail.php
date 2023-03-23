@@ -14,6 +14,7 @@ function send_email_to_admin() {
       $message.= 'Meta Title: '. $post_data['meta_title']. "\n";
       $message.= 'Meta Description: '. $post_data['meta_description']. "\n";
       $message.= 'Meta Keywords: '. $post_data['meta_keywords']. "\n";
+      $message.= 'Google Page Speed: '. $post_data['page_speed']. "\n";
       $message.= "\n\n";
     }
 
@@ -34,6 +35,25 @@ function log_mailer_errors( $wp_error ){
   wp_die("Mailer Error: " . $wp_error->get_error_message() ."\n");
 }
 
+//Google Page Speed
+function get_page_speed_score($url) {
 
+  $api_key = "416ca0ef-63e4-4caa-a047-ead672ecc874"; // your api key
+  $new_url = "http://www.webpagetest.org/runtest.php?url=".$url."&runs=1&f=xml&k=".$api_key; 
+  $run_result = simplexml_load_file($new_url);
+  $test_id = $run_result->data->testId;
+  $status_code=100;
+    
+  while( $status_code != 200){
+    sleep(10);
+    $xml_result = "http://www.webpagetest.org/xmlResult/".$test_id."/";
+    $result = simplexml_load_file($xml_result);
+    $status_code = $result->statusCode;
+    $time = (float) ($result->data->median->firstView->loadTime)/1000;
+  }
+
+  return $time;
+  
+}
 
 ?>
