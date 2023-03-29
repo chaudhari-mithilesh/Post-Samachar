@@ -39,3 +39,8 @@ For Windows, add the following PowerShell script to your task scheduler:
 ## For Ubuntu or MacOS, refer to this documentation:
 
 https://developer.wordpress.org/plugins/cron/hooking-wp-cron-into-the-system-task-scheduler/
+
+
+## Update
+
+Search for $Custom in files for custom code.
